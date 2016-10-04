@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+	<title>Audiomark</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="screen" >
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" media="screen" />
+   <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+   <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+</head>
+<body>
+  <nav id="nav" class="noPrint blue">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">&nbsp;<i class="material-icons">mic</i>&nbsp;Audiomark</a>
+    </div>
+  </nav>
+	<div id="main" class="container noPrint">
+
+    <div class="row">
+      <div id="canvascontainer" class="col s9">
+        <canvas id="analyser"></canvas>
+      </div>
+      <div class="col s3">
+        <div>
+          <a id="micicon" href="JavaScript:toggleRecording(this)"><i class="material-icons large">mic</i></a>
+        </div>
+        <div>
+          <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i><img class="hide-on-small-only" id="qrpreview"></a>
+        </div>
+        <div>
+          <a id="doneicon" href="JavaScript:done(this)" disabled="disabled"><i class="material-icons large">done</i></a>
+        </div>
+
+      </div>
+    </div>
+	</div>
+
+  <div id="print" class="doPrint">
+    <img id="qr" />
+  </div>
+    
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="//cdn.jsdelivr.net/pouchdb/6.0.6/pouchdb.min.js"></script>
+	<script src="js/recorder.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+
+
+#print {
+  display:none;
+}
+
+.recording {
+  color: #ff2222;
+}
+
+a[disabled] {
+  color: #cccccc
+}
+
+#canvascontainer { 
+  height:250px
+}
+
+#analyser {
+  height: 100%
+  width: 100%
+}
+
+#qrpreview  {
+    width: 15px;
+    left: -52px;
+    position: relative;
+    top: -20px;
+}
+
+img[src=""] {
+   display: none;
+}
