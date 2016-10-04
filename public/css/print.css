@@ -6,6 +6,10 @@
   display:none;
 }
 
+#nologgedin {
+  display:none;
+}
+
 #qr {
   width:100%
 }

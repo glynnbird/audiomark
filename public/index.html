@@ -10,16 +10,21 @@
    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
 </head>
 <body>
-  <nav id="nav" class="noPrint blue">
+  <nav id="nav" class="blue">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">&nbsp;<i class="material-icons">mic</i>&nbsp;Audiomark</a>
+      <ul class="right hide-on-small-and-down">
+        <li id="navname"></li>
+        <li id="navlogin"><a href="/_facebook">Login with Facebook</a></li>
+      </ul>
     </div>
   </nav>
-	<div id="main" class="container noPrint">
+	<div id="main" class="container">
 
     <div class="row">
       <div id="canvascontainer" class="col s9">
         <canvas id="analyser"></canvas>
+        <h5 id="shareurl" class="center-align"></h5>
       </div>
       <div class="col s3">
         <div>
@@ -36,7 +41,45 @@
     </div>
 	</div>
 
-  <div id="print" class="doPrint">
+
+  <div id="nologgedin">
+
+    <h1 class="header center blue-text">audiomark</h1>
+    <div class="row center">
+      <h5 class="header col s12 light">Record audio snippets and share with printable QR codes</h5>
+      <h6 class="header col s12 light">Please <a href="/_facebook">Login with Facebook</a> to get started</h6>
+    </div>
+
+    <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center blue-text"><i class="material-icons">mic_none</i></h2>
+            <h5 class="center">What is audiomark?</h5>
+
+            <p class="light">audiomark allows audio snippets to be collected on your PC, laptop where they are saved locally in a <a href="https://pouchdb.com/">PouchDB</a> database.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center blue-text"><i class="material-icons">supervisor_account</i></h2>
+            <h5 class="center">How do I share?</h5>
+
+            <p class="light">Once the clip is recorded you can print a QR code that allows someone else to listen to your recording.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center blue-text"><i class="material-icons">grade</i></h2>
+            <h5 class="center">What's it for?</h5>
+            <p class="light">It's used by teachers to affix stickers to students' work instead of writing long-form comments on their work.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div id="print">
     <img id="qr" />
   </div>
     

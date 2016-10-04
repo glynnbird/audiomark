@@ -25,7 +25,7 @@ var analyserContext = null;
 var canvasWidth, canvasHeight;
 var recIndex = 0;
 var db = null;
-
+var loggedinuserid = null;
 
 function saveAudio() {
     audioRecorder.exportMonoWAV( doneEncoding );
@@ -56,13 +56,13 @@ function doneEncoding( blob ) {
       }
     }, function(err, data) {
       console.log(err, data);
-      var url = location.origin + '/wav/' + data.id;
+      var url = location.origin + '/w/' +loggedinuserid + '/' + data.id;
+      console.log('url', url);
       var imgurl = 'https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=' + url;
-      db.destroy(function() {
-        db = new PouchDB('audiomark');
-        $('#qr').attr('src', imgurl);
-        $('#qrpreview').attr('src', imgurl);
-      })
+      $('#qr').attr('src', imgurl);
+      $('#qrpreview').attr('src', imgurl);
+      $('#shareurl').html(url);
+
 
 
     });
@@ -105,6 +105,7 @@ function done(e) {
   $('#doneicon').attr('disabled', 'disabled');
   $('#micicon').removeAttr('disabled');
   $('#qrpreview').attr('src','');
+  $('#shareurl').html('');
 }
 
 function convertToMono( input ) {
@@ -210,15 +211,84 @@ function initAudio() {
 }
 
 
+// perform a sync
+var sync = function(loggedinuser) {
+  var url = window.location.origin.replace('//', '//' + loggedinuser.username + ':' + loggedinuser.meta.password + '@');
+  url += '/audiomark';
+  var remote = new PouchDB(url);
+  console.log('syncing to', url)
+
+  // sync live with retry, animating the icon when there's a change'
+  db.replicate.to(remote, {live: true, retry: true}).on('change', function(c) {
+    console.log('change', c)
+  }).on('denied', function (err) {
+  // a document failed to replicate (e.g. due to permissions)
+  console.log('denied', err)
+}).on('complete', function (info) {
+  // handle complete
+}).on('error', function (err) {
+  // handle error
+  console.log('error',err);
+});
+}
+
+var exchangeToken = function(token) {
+  var req = {
+    method: 'get',
+    url: '/_token/' + token,
+    dataType: 'json'
+  }
+  $.ajax(req).done(function(data) {
+    if (data && data.ok === false) {
+       return Materialize.toast('Invalid token', 10000);
+    }
+    delete data._rev
+    data._id = '_local/user';
+    console.log('saving', data);
+    db.put(data).then(function(rep) {
+      location.href='/';
+    })
+  }).fail(function(e) {
+    Materialize.toast('Invalid token', 10000);
+  })
+}
+
 window.addEventListener('load', function() {
   var dbname = 'audiomark';
   db = new PouchDB(dbname);
-  db.destroy(function() {
-    db = new PouchDB(dbname);
-  });
-  initAudio();
+
   var cc = $('#canvascontainer');
   var a = document.getElementById('analyser');
   a.width = '' + cc.innerWidth();
   a.height = '' + cc.innerHeight();
+
+  if (location.hash && location.hash.indexOf('token=') != -1) {
+    $('#main').hide();
+    $('#nologgedin').hide();
+    var idx = location.hash.indexOf('token=');
+    var h = location.hash.indexOf('#', idx) != -1 ? location.hash.indexOf('#', idx) : location.hash.length;
+    var a = location.hash.indexOf('&', idx) != -1 ? location.hash.indexOf('&', idx) : location.hash.length;
+    token = location.hash.substring(idx+6, Math.min(h, a));
+    exchangeToken(token);
+    return;
+  } else {
+    db.get('_local/user').then(function(data) {
+      loggedinuser = data;
+      loggedinuserid = data.username;
+      $('#nologgedin').hide();
+      $('#main').show();
+      var msg = 'Welcome back, ' + data.meta.name ;
+      $('#navname').html(data.meta.name+' &nbsp;');
+      $('#navlogin').hide();
+      Materialize.toast(msg, 4000);
+      sync(data);
+    }).catch(function(e) {
+    });
+  }
+
+  initAudio();
+
+
 });
+
+// http://localhost:8000/w/10154548735446449/1d8d08
