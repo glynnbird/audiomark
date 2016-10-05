@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" media="screen" />
    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+   <script src="https://use.fontawesome.com/8252855564.js"></script>
 </head>
 <body>
   <nav id="nav" class="blue">
@@ -22,7 +23,7 @@
 	<div id="main" class="container">
     <div class="row">
       <div class="col s4 center-align">
-       <a id="micicon" href="JavaScript:toggleRecording(this)"><i class="material-icons large">mic</i></a> 
+       <a id="micicon" href="JavaScript:toggleRecording(this)" disabled="disabled"><i class="material-icons large">mic</i></a> 
        <br />
        Record
       </div>
@@ -34,7 +35,7 @@
       <div class="col s4 center-align">
        <a id="doneicon" href="JavaScript:done(this)" disabled="disabled"><i class="material-icons large">done</i></a>
        <br />
-       Repeat
+       Done
       </div>
     </div>
     <div class="row">
@@ -53,7 +54,9 @@
     <h1 class="header center blue-text">audiomark</h1>
     <div class="row center">
       <h5 class="header col s12 light">Record audio snippets and share with printable QR codes</h5>
-      <h6 id="loginlink" class="header col s12 light">Please <a href="/_facebook">Login with Facebook</a> to get started</h6>
+      <h5 id="loginlink" class="header col s12 light">
+        Log in with Facebook to <br /><br /><a href="/_facebook" class="btn btn-large blue">Get Started</a>
+      </h5>
     </div>
 
     <div class="row">

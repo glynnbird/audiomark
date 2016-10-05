@@ -3,12 +3,22 @@ var loggedinuserid = null;
 var mediaRecorder = null;
 var progress = 0;
 var progressInterval = null;
+var recording = false;
 
 function onMediaSuccess(stream) {
   mediaRecorder = new MediaStreamRecorder(stream);
   mediaRecorder.mimeType = 'audio/wav'; // check this line for audio/wav
   mediaRecorder.audioChannels = 1; // left only
+  $('#micicon').removeAttr('disabled');
   mediaRecorder.ondataavailable = function (blob) {
+    var e2 = $('#micicon');
+    e2.removeClass('recording');
+    $('#printicon').removeAttr('disabled');
+    $('#doneicon').removeAttr('disabled');
+    $('#micicon').attr('disabled','disabled');
+    clearInterval(progressInterval);
+    progressInterval = 0;
+    $('#progressor').attr('style','width:100%');
     doneEncoding(blob);
   };
 }
@@ -22,52 +32,46 @@ function s6() {
 }
 
 function doneEncoding( blob ) {
-    db.post({
-      _id: s6(),
-      ts: new Date().getTime(),
-      _attachments: {
-        'audio.wav': {
-          content_type: blob.type,
-          data: blob
-        }
+  db.post({
+    _id: s6(),
+    ts: new Date().getTime(),
+    _attachments: {
+      'audio.wav': {
+        content_type: blob.type,
+        data: blob
       }
-    }, function(err, data) {
-      console.log(err, data);
-      var url = location.origin + '/w/' +loggedinuserid + '/' + data.id;
-      console.log('url', url);
-      var imgurl = 'https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=' + url;
-      $('#qr').attr('src', imgurl);
-      $('#qrpreview').attr('src', imgurl);
-      $('#shareurl').html('<a href="' + url + '" target="_new">' + url + '</a>');
-    });
+    }
+  }, function(err, data) {
+    console.log(err, data);
+    var url = location.origin + '/w/' +loggedinuserid + '/' + data.id;
+    console.log('url', url);
+    var imgurl = 'https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=' + url;
+    $('#qr').attr('src', imgurl);
+    $('#qrpreview').attr('src', imgurl);
+    $('#shareurl').html('<a href="' + url + '" target="_new">' + url + '</a>');
+  });
 }
 
 function toggleRecording( e ) {
   var e2 = $('#micicon');
-  if (e2.hasClass('recording')) {
-      console.log('stop recording');
-      // stop recording
-      mediaRecorder.stop();
-      e2.removeClass('recording');
-      $('#printicon').removeAttr('disabled');
-      $('#doneicon').removeAttr('disabled');
-      $('#micicon').attr('disabled','disabled');
-      clearInterval(progressInterval);
-      progressInterval = 0;
-      $('#progressor').attr('style','width:100%');
-  } else {
+  if (recording && e2.hasClass('recording')) {
+    console.log('stop recording');
+    // stop recording
+    mediaRecorder.stop();
+  } else if (!recording) {
     console.log('start recording');
-      // start recording
-      if (!mediaRecorder) {
-        return Materialize.toast('Cannot record audio', 2000);
-      }
-      progress = 0;
-      progressInterval = setInterval(function() {
-        progress++;
-        $('#progressor').attr('style','width:' + progress + '%');
-      }, 100);
-      e2.addClass('recording');
-      mediaRecorder.start(10000);
+    recording = true;
+    // start recording
+    if (!mediaRecorder) {
+      return Materialize.toast('Cannot record audio', 2000);
+    }
+    progress = 0;
+    progressInterval = setInterval(function() {
+      progress++;
+      $('#progressor').attr('style','width:' + 100 * (progress/200) + '%');
+    }, 100);
+    e2.addClass('recording');
+    mediaRecorder.start(20000);
   }
 }
 
@@ -82,6 +86,7 @@ function doPrint(e) {
 
 function done(e) {
   console.log('done');
+  recording = false;
   $('#printicon').attr('disabled', 'disabled');
   $('#doneicon').attr('disabled', 'disabled');
   $('#micicon').removeAttr('disabled');
@@ -132,7 +137,7 @@ var exchangeToken = function(token) {
   })
 }
 
-window.addEventListener('load', function() {
+$( document ).ready(function() {
   var dbname = 'audiomark';
   db = new PouchDB(dbname);
 
