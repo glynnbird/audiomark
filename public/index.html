@@ -20,24 +20,30 @@
     </div>
   </nav>
 	<div id="main" class="container">
-
     <div class="row">
-      <div id="canvascontainer" class="col s9">
-        <canvas id="analyser"></canvas>
-        <h5 id="shareurl" class="center-align"></h5>
+      <div class="col s4 center-align">
+       <a id="micicon" href="JavaScript:toggleRecording(this)"><i class="material-icons large">mic</i></a> 
+       <br />
+       Record
       </div>
-      <div class="col s3">
-        <div>
-          <a id="micicon" href="JavaScript:toggleRecording(this)"><i class="material-icons large">mic</i></a>
-        </div>
-        <div>
-          <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i><img class="hide-on-small-only" id="qrpreview"></a>
-        </div>
-        <div>
-          <a id="doneicon" href="JavaScript:done(this)" disabled="disabled"><i class="material-icons large">done</i></a>
-        </div>
-
+      <div class="col s4 center-align">
+        <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i><img class="hide-on-small-only" id="qrpreview"></a>
+        <br />
+        Print
       </div>
+      <div class="col s4 center-align">
+       <a id="doneicon" href="JavaScript:done(this)" disabled="disabled"><i class="material-icons large">done</i></a>
+       <br />
+       Repeat
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <h6 id="shareurl" class="center-align truncate"></h6>
+      </div>
+    </div>
+    <div class="progress blue lighten-4">
+      <div id="progressor" class="determinate blue" style="width: 0%" ></div>
     </div>
 	</div>
 
@@ -47,7 +53,7 @@
     <h1 class="header center blue-text">audiomark</h1>
     <div class="row center">
       <h5 class="header col s12 light">Record audio snippets and share with printable QR codes</h5>
-      <h6 class="header col s12 light">Please <a href="/_facebook">Login with Facebook</a> to get started</h6>
+      <h6 id="loginlink" class="header col s12 light">Please <a href="/_facebook">Login with Facebook</a> to get started</h6>
     </div>
 
     <div class="row">
@@ -86,7 +92,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
   <script src="//cdn.jsdelivr.net/pouchdb/6.0.6/pouchdb.min.js"></script>
-	<script src="js/recorder.js"></script>
+	<script src="js/MediaStreamRecorder.js"></script>
 	<script src="js/main.js"></script>
 
 </body>
