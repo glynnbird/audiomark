@@ -45,9 +45,8 @@ function doneEncoding( blob ) {
     console.log(err, data);
     var url = location.origin + '/w/' +loggedinuserid + '/' + data.id;
     console.log('url', url);
-    var imgurl = 'https://chart.googleapis.com/chart?cht=qr&chs=400x400&chl=' + url;
-    $('#qr').attr('src', imgurl);
-    $('#qrpreview').attr('src', imgurl);
+    qrcode.clear();
+    qrcode.makeCode(url);
     $('#shareurl').html('<a href="' + url + '" target="_new">' + url + '</a>');
   });
 }
@@ -160,6 +159,12 @@ $( document ).ready(function() {
       $('#navlogin').hide();
       Materialize.toast(msg, 4000);
       sync(data);
+      var w = $('body').width() / 2;
+      qrcode = new QRCode("qr", {
+          text: "http://jindo.dev.naver.com/collie",
+          width: w,
+          height: w
+      });
     }).catch(function(e) {
       $('#main').hide();
     });

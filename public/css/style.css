@@ -9,7 +9,9 @@
 a[disabled] {
   color: #cccccc
 }
-
+#main {
+  margin-top:50px
+}
 #qrpreview  {
     width: 15px;
     left: -52px;
@@ -22,4 +24,12 @@ img[src=""] {
 
 #shareurl {
   min-height: 16px;
+}
+
+footer a {
+  color: white !important
+}
+
+.page-footer {
+  margin-top: 75px !important;
 }

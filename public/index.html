@@ -27,7 +27,7 @@
        Record
       </div>
       <div class="col s4 center-align">
-        <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i><img class="hide-on-small-only" id="qrpreview"></a>
+        <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i></a>
         <br />
         Print
       </div>
@@ -59,42 +59,100 @@
     </div>
 
     <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">mic_none</i></h2>
-            <h5 class="center">What is audiomark?</h5>
+      <div class="col s12 m4">
+        <div class="icon-block">
+          <h2 class="center blue-text"><i class="material-icons">mic_none</i></h2>
+          <h5 class="center">What is audiomark?</h5>
 
-            <p class="light">audiomark allows audio snippets to be collected on your PC, laptop where they are saved locally in a <a href="https://pouchdb.com/">PouchDB</a> database.</p>
-          </div>
+          <p class="light">audiomark allows audio snippets to be collected on your PC, laptop where they are saved locally in a <a href="https://pouchdb.com/">PouchDB</a> database.</p>
         </div>
+      </div>
 
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">supervisor_account</i></h2>
-            <h5 class="center">How do I share?</h5>
+      <div class="col s12 m4">
+        <div class="icon-block">
+          <h2 class="center blue-text"><i class="material-icons">supervisor_account</i></h2>
+          <h5 class="center">How do I share?</h5>
 
-            <p class="light">Once the clip is recorded you can print a QR code that allows someone else to listen to your recording.</p>
-          </div>
+          <p class="light">Once the clip is recorded you can print a QR code that allows someone else to listen to your recording.</p>
         </div>
+      </div>
 
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center blue-text"><i class="material-icons">grade</i></h2>
-            <h5 class="center">What's it for?</h5>
-            <p class="light">It's used by teachers to affix stickers to students' work instead of writing long-form comments on their work.</p>
-          </div>
+      <div class="col s12 m4">
+        <div class="icon-block">
+          <h2 class="center blue-text"><i class="material-icons">grade</i></h2>
+          <h5 class="center">What's it for?</h5>
+          <p class="light">It's used by teachers to affix stickers to students' work instead of writing long-form comments on their work.</p>
         </div>
+      </div>
     </div>
-  </div>
+  
+    <div id="print">
+      <div id="qr" ></div>
+    </div>
 
-  <div id="print">
-    <img id="qr" />
-  </div>
-    
+   <footer class="page-footer grey lighten-1">
+     <div class="container">
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="https://pouchdb.com/">PouchDB</a> allows data to be stored inside the web browser. Audio is stored as an attachment to a PouchDB JSON document.
+              All of your audio snippets are stored in your web browser until you log out.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="https://cloudant.com">Cloudant</a> is a NoSQL database-as-a-service running in the cloud. PouchDB sends its data to Cloudant where they are stored
+              so that a user who visits a URL encoded in a QR code is delivered the audio file.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="htps://www.npmjs.com/package/cloudant-envoy">Cloudant Envoy</a> is a microservice that sits between PouchDB and Cloudant. It ensures
+                that each users' data is stored in a single Cloudant database but in a way that each user cannot overwrite each other's records.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="https://www.npmjs.com/package/msr">MSR</a> or MediaStreamRecorder is a JavaScript library that allows cross-browser
+              audio and video recording with a simple API.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="https://davidshimjs.github.io/qrcodejs/">qrcode.js</a> is a JavaScript library that encodes a string as a QR code on an
+              HTML canvas control. The code can be read by any QR code reader app and decoded back into its original url.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <p class="light"><a href="http://materializecss.com/">MaterializeCSS</a> is a front-end framework that allows mobile-friendly web pages to be created that
+                follow Google's Material Design principles. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+         <div class="col s12 center">
+            App icon made by <a href="http://www.flaticon.com/authors/chanut-is-industries" title="Chanut is Industries">Chanut is Industries</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+         </div>
+      </div>
+    </div>
+  </footer>
+
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-  <script src="//cdn.jsdelivr.net/pouchdb/6.0.6/pouchdb.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/pouchdb/6.0.6/pouchdb.min.js"></script>
 	<script src="js/MediaStreamRecorder.js"></script>
+  <script src="js/qrcode.min.js"></script>
 	<script src="js/main.js"></script>
 
 </body>
