@@ -1,3 +1,20 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/serviceworker.js', { scope: '/' }).then(function(reg) {
+    
+    if (reg.installing) {
+      console.log('Service worker installing');
+    } else if (reg.waiting) {
+      console.log('Service worker installed');
+    } else if (reg.active) {
+      console.log('Service worker active');
+    }
+    
+  }).catch(function(error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+}
+
 var db = null;
 var loggedinuserid = null;
 var mediaRecorder = null;
@@ -144,11 +161,12 @@ var exchangeToken = function(token) {
   })
 }
 
-function logout() {
+function logout(e) {
+  e.preventDefault();
   db.destroy().then(function() {
     db = new PouchDB(dbname);
     $('#navname1').html('');
-    $('#navname1').html('');
+    $('#navname2').html('');
     $('#loginlink').show();
     $('#navlogout1').hide();
     $('#navlogout2').hide();
@@ -188,11 +206,13 @@ $( document ).ready(function() {
       });
     }).catch(function(e) {
       $('#main').hide();
+      $('#navlogout1').hide();
+      $('#navlogout2').hide();
     });
   }
 
-  $( "#logout1" ).click(logout);
-  $( "#logout2" ).click(logout);
+  $('#navlogout1').click(logout);
+  $('#navlogout2').click(logout);
 
   $('#micicon').click(toggleRecording);
   $('#printicon').click(doPrint);
