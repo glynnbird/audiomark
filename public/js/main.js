@@ -89,7 +89,6 @@ function done(e) {
   $('#printicon').attr('disabled', 'disabled');
   $('#doneicon').attr('disabled', 'disabled');
   $('#micicon').removeAttr('disabled');
-  $('#qrpreview').attr('src','');
   $('#shareurl').html('');
    $('#progressor').attr('style','width:0%');
 }
@@ -161,7 +160,7 @@ $( document ).ready(function() {
       sync(data);
       var w = $('body').width() / 2;
       qrcode = new QRCode("qr", {
-          text: "http://jindo.dev.naver.com/collie",
+          text: "http://github.com",
           width: w,
           height: w
       });
