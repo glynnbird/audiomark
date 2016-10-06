@@ -2,6 +2,30 @@
   "name": "audiomark",
   "icons": [
     {
+      "src": "/img/microphone36x36.png",
+      "sizes": "36x36",
+      "type": "image/png",
+      "density": 0.75
+    },
+    {
+      "src": "/img/microphone48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "density": 1.0
+    },
+    {
+      "src": "/img/microphone72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "density": 1.5
+    },
+    {
+      "src": "/img/microphone96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "density": 2.0
+    },
+    {
       "src": "/img/microphone.png",
       "sizes": "512x512",
       "type": "image/png"
