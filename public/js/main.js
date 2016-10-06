@@ -4,6 +4,7 @@ var mediaRecorder = null;
 var progress = 0;
 var progressInterval = null;
 var recording = false;
+var dbname = 'audiomark';
 
 function onMediaSuccess(stream) {
   mediaRecorder = new MediaStreamRecorder(stream);
@@ -52,7 +53,11 @@ function doneEncoding( blob ) {
 }
 
 function toggleRecording( e ) {
+  e.preventDefault();
   var e2 = $('#micicon');
+  if (e2.attr('disabled')) {
+    return;
+  }
   if (recording && e2.hasClass('recording')) {
     console.log('stop recording');
     // stop recording
@@ -75,16 +80,20 @@ function toggleRecording( e ) {
 }
 
 function doPrint(e) {
-  var e = $('#printicon');
-  if (e.attr('disabled')) {
-    console.log('disabled');
+  e.preventDefault();
+  var e2 = $('#printicon');
+  if (e2.attr('disabled')) {
     return;
   }
   window.print();
 }
 
 function done(e) {
-  console.log('done');
+  e.preventDefault();
+  var e2 = $('#doneicon');
+  if (e2.attr('disabled')) {
+    return;
+  }
   recording = false;
   $('#printicon').attr('disabled', 'disabled');
   $('#doneicon').attr('disabled', 'disabled');
@@ -135,8 +144,19 @@ var exchangeToken = function(token) {
   })
 }
 
+function logout() {
+  db.destroy().then(function() {
+    db = new PouchDB(dbname);
+    $('#navname1').html('');
+    $('#navname1').html('');
+    $('#loginlink').show();
+    $('#navlogout1').hide();
+    $('#navlogout2').hide();
+  });
+}
+
 $( document ).ready(function() {
-  var dbname = 'audiomark';
+  $(".button-collapse").sideNav();
   db = new PouchDB(dbname);
 
   if (location.hash && location.hash.indexOf('token=') != -1) {
@@ -154,8 +174,10 @@ $( document ).ready(function() {
       loggedinuserid = data.username;
       $('#loginlink').hide();
       var msg = 'Welcome back, ' + data.meta.name ;
-      $('#navname').html(data.meta.name+' &nbsp;');
-      $('#navlogin').hide();
+      $('#navname1').html(data.meta.name);
+      $('#navname2').html(data.meta.name);
+      $('#navlogout1').show();
+      $('#navlogout2').show();
       Materialize.toast(msg, 4000);
       sync(data);
       var w = $('body').width() / 2;
@@ -168,6 +190,14 @@ $( document ).ready(function() {
       $('#main').hide();
     });
   }
+
+  $( "#logout1" ).click(logout);
+  $( "#logout2" ).click(logout);
+
+  $('#micicon').click(toggleRecording);
+  $('#printicon').click(doPrint);
+  $('#doneicon').click(done);
+
   if (!navigator.getUserMedia) {
      navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   }

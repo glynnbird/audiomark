@@ -17,10 +17,15 @@
     <nav id="nav" class="blue">
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">&nbsp;<i class="material-icons">mic</i>&nbsp;Audiomark</a>
-        <ul class="right hide-on-small-and-down">
-          <li id="navname"></li>
-          <li id="navlogin"><a href="/_facebook">Login with Facebook</a></li>
+        <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#" id="navname1"></a></li>
+          <li><a id="navlogout1">Logout</a></li>
         </ul>
+        <ul class="side-nav" id="mobile-nav">
+          <li><a href="#" id="navname2"></a></li>
+          <li><a id="navlogout2">Logout</a></li>
+      </ul>
       </div>
     </nav>  
   </header>
@@ -28,17 +33,17 @@
     <div id="main" class="container">
       <div class="row">
         <div class="col s4 center-align">
-        <a id="micicon" href="JavaScript:toggleRecording(this)" disabled="disabled"><i class="material-icons large">mic</i></a> 
+        <a id="micicon" href="#" disabled="disabled"><i class="material-icons large">mic</i></a> 
         <br />
         Record
         </div>
         <div class="col s4 center-align">
-          <a id="printicon" href="JavaScript:doPrint(this)" disabled="disabled"><i class="material-icons large ">print</i></a>
+          <a id="printicon" href="#" disabled="disabled"><i class="material-icons large ">print</i></a>
           <br />
           Print
         </div>
         <div class="col s4 center-align">
-        <a id="doneicon" href="JavaScript:done(this)" disabled="disabled"><i class="material-icons large">done</i></a>
+        <a id="doneicon" href="#" disabled="disabled"><i class="material-icons large">done</i></a>
         <br />
         Done
         </div>
