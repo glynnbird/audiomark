@@ -52,20 +52,21 @@ var getOrCreateUser = function(profile, callback) {
 
 // passport
 var passport = require('passport'), 
-  FacebookStrategy = require('passport-facebook').Strategy;
+  TwitterStrategy = require('passport-twitter').Strategy;
 
 var opts = {
-  clientID: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: appurl + '/_facebook/callback'
+  consumerKey: process.env.CLIENT_ID,
+  consumerSecret: process.env.CLIENT_SECRET,
+  callbackURL: appurl + '/_twitter/callback'
 };
-passport.use(new FacebookStrategy(opts , function(accessToken, refreshToken, profile, done) {
+passport.use(new TwitterStrategy(opts , function(accessToken, refreshToken, profile, done) {
    getOrCreateUser(profile, done);
 }));
 
-router.get('/_facebook', passport.authenticate('facebook', { session: false }));
-router.get('/_facebook/callback', passport.authenticate('facebook', { session: false }), function(req, res) {
+router.get('/_twitter', passport.authenticate('twitter', {session: false}));
+router.get('/_twitter/callback', passport.authenticate('twitter', {session: false}), function(req, res) {
   var data = req.user;
+  console.log('user', req.user)
   data._id = uuid.v4();
   data.ts = new Date().getTime() + 1000*60*60;
   delete data._rev;
@@ -119,11 +120,14 @@ var opts = {
   usersDatabaseName: 'audiomarkusers',
   production: true,
   static: path.join(__dirname, './public'),
-  router: router
+  router: router,
+  port: appEnv.port,
+  middleware: [ passport.initialize() ]
 };
 
 // start up the web server
-var envoy = require('cloudant-envoy')(opts);
+//var envoy = require('cloudant-envoy')(opts);
+var envoy = require('../envoy')(opts);
 //var envoy = require('../envoy')(opts);
 envoy.events.on('listening', function() {
   // setup tokens database 
