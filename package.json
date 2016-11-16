@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/glynnbird/audiomark#readme",
   "dependencies": {
-    "cloudant-envoy": "^0.2.5",
+    "cloudant-envoy": "^0.3.1",
     "crypto-js": "^3.1.6",
     "express": "^4.14.0",
     "passport": "^0.3.2",

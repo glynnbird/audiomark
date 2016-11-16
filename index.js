@@ -126,9 +126,7 @@ var opts = {
 };
 
 // start up the web server
-//var envoy = require('cloudant-envoy')(opts);
-var envoy = require('../envoy')(opts);
-//var envoy = require('../envoy')(opts);
+var envoy = require('cloudant-envoy')(opts);
 envoy.events.on('listening', function() {
   // setup tokens database 
   cloudant = envoy.cloudant;
