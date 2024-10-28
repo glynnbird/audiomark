@@ -1,2 +1,7 @@
 start.sh
 node_modules
+terraform.tfvars
+terraform.tfstate.d
+.terraform
+functions
+dist
