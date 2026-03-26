@@ -1,6 +1,6 @@
 <script setup>
-  const { playbackURL } = useRecording()
-  if (playbackURL == '') {
+  const { qrURL } = useRecording()
+  if (qrURL == '') {
     await navigateTo('/')
   }
   function print() {
@@ -18,5 +18,5 @@
       <v-btn color="error" to="/">Back</v-btn>
     </v-card-actions>
   </v-card>
-  <Qrcode :value="playbackURL" />
+  <Qrcode :value="qrURL" />
 </template>

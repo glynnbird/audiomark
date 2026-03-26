@@ -33,6 +33,16 @@ export default function () {
     return audioURL
   })
 
+  const qrURL = computed(() => {
+    if (recKey.value === '') {
+      return ''
+    }
+    const u = new URL(apiHome)
+    u.pathname = `/v/${recKey.value}`
+    const qURL = u.toString()
+    return qURL
+  })
+
   const startRecording = async () => {
     isSaving.value = false
     isRecording.value = true
@@ -109,5 +119,5 @@ export default function () {
     }
   }
 
-  return { recKey, setRecKey, clearRecKey, startRecording, stopRecording, getStream, isRecording, isReady,isSaving,  playbackURL}
+  return { recKey, setRecKey, clearRecKey, startRecording, stopRecording, getStream, isRecording, isReady,isSaving, qrURL, playbackURL}
 }
