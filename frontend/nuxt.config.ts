@@ -1,28 +1,81 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
-  modules: [],
-  ssr: false,
-
-  runtimeConfig: {
-    public: {
-      apiBase: 'https://audiomark.glynnbird.com'
-    }
-  },
-
-  css: [
-    'vuetify/lib/styles/main.sass',
-    '@mdi/font/css/materialdesignicons.min.css'
-  ],
-
   build: {
     transpile: ['vuetify'],
   },
-
+  modules: ['@vite-pwa/nuxt'],
   vite: {
-    define: {
-      'process.env.DEBUG': false,
+    plugins: [
+      vuetify({ autoImport: true })
+    ],
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ]
+    }
+  },
+  ssr: false,
+  app: {
+    head: {
+      link: [
+        { rel:"manifest", href:"/manifest.webmanifest"  }
+      ]
+    }
+  },
+  pwa: {
+    strategies: 'generateSW',
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 3600,
+    },
+    manifest: {
+      "short_name": "Audiomark",
+      "name": "Audio recorder",
+      "icons": [
+        {
+          "src": "/audio_192.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        },
+        {
+          "src": "/audio_512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ],
+      "id": "/?source=pwa",
+      "start_url": "/?source=pwa",
+      "background_color": "#FFFFFF",
+      "display": "standalone",
+      "scope": "/",
+      "theme_color": "#3367D6",
+      "description": "Audio recorder"
+    },
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+    },
+    devOptions: {
+      enabled: false,
+      type: "module"
     }
   },
 
-  compatibilityDate: '2024-09-24'
+  runtimeConfig: {
+    public: {
+      apiBase: ''
+    }
+  },
+  compatibilityDate: '2025-08-04',
+  devtools: { enabled: true },
+  future: {
+    compatibilityVersion: 5,
+  }
 })
