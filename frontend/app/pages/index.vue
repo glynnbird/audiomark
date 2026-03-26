@@ -13,6 +13,8 @@
 }
 </style>
 <template>
+  <PWARefresh></PWARefresh>
+
   <v-card v-if="isReady && !isRecording && !isSaving">
     <v-card-title>Ready to record</v-card-title>
     <v-card-text>Press the red record button when you're ready to start recording</v-card-text>
