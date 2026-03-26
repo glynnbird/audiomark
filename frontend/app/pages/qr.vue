@@ -3,9 +3,20 @@
   if (playbackURL == '') {
     await navigateTo('/')
   }
+  function print() {
+    window.print()
+  }
 </script>
 <template>
-  <v-alert class="noprint">Print this QR code to share your recording</v-alert>
+  <v-card class="noprint">
+    <v-card-title>Print this QR code</v-card-title>
+    <v-card-text>
+      Print this QR code share your recording with someone. Recordings are kept for 30 days.
+    </v-card-text>
+    <v-card-actions>
+      <v-btn color="secondary" @click="print()">Print</v-btn>
+      <v-btn color="error" to="/">Back</v-btn>
+    </v-card-actions>
+  </v-card>
   <Qrcode :value="playbackURL" />
-  <v-btn class="noprint" to="/">Back</v-btn>
 </template>
