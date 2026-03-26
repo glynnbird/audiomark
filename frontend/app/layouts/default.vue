@@ -8,7 +8,7 @@
 <template>   
   <v-app theme="light">
     <v-app-bar color="#3367D6" density="compact" class="noprint">
-      <v-app-bar-title @click="navigateTo('/')">Audiomark</v-app-bar-title>
+      <v-app-bar-title @click="navigateTo('/')" style="user-select:none;">Audiomark</v-app-bar-title>
     </v-app-bar>
     <v-main>
       <v-container fluid>
