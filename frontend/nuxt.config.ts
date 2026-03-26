@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  modules: ['@vite-pwa/nuxt'],
+  modules: ['@vite-pwa/nuxt', 'nuxt-qrcode'],
   vite: {
     plugins: [
       vuetify({ autoImport: true })
@@ -41,12 +41,12 @@ export default defineNuxtConfig({
       "name": "Audio recorder",
       "icons": [
         {
-          "src": "/audio_192.png",
+          "src": "/audiomark192.png",
           "type": "image/png",
           "sizes": "192x192"
         },
         {
-          "src": "/audio_512.png",
+          "src": "/audiomark512.png",
           "type": "image/png",
           "sizes": "512x512"
         }

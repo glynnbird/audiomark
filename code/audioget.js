@@ -15,5 +15,10 @@ export async function onRequest(context) {
   
   // read from object storage
   const object = await context.env.VIDEO_BUCKET.get(key)
+  if (object === null) {
+    return new Response(notOk, missingResponse)
+  }
+
+  // if we get here, we have an object to send back
   return new Response(object.body, { headers: { 'Content-type': 'audio/ogg' }})
 }

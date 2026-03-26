@@ -1,91 +1,31 @@
 <script setup>
   // composables
-  const recording = useRecording()
-  const isRecording = ref(false)
-  const ready = ref(0)
-  ready.value = false
-  let stream = null
-  let mediaRecorder = null
-  let chunks = []
-
-  const startRecording = async () => {
-    isRecording.value = true
-    recording.clearRecKey()
-    mediaRecorder.start(500)
-  }
-
-  async function cloudSaveVideo(key, blob) {
-    const u = new URL('/api/audioput', apiHome)
-    u.searchParams.append('key', key)
-    await $fetch(u.toString(), {
-      method: 'POST',
-      body: blob,
-      headers: {
-        'content-type': 'audio/ogg',
-        'content-length': blob.size
-      }
-    })
-    await showAlert('Recording saved')
-    return k
-  }
-
-  const generateKey = () => {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890'.split('')
-    const key = []
-    for(let i = 0; i < 8; i++) {
-      key.push(chars[Math.floor(Math.random()*chars.length)])
-    }
-    return key.join('')
-  }
-
-  const stopRecording = async () => {
-    isRecording.value = false
-    mediaRecorder.stop()
-    // wait for the last chunk
-    setTimeout(async () => {
-      console.log('chunks length', chunks.length)
-      const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" })
-      console.log('blob', blob.type, blob)
-      const key = generateKey()
-      recording.setRecKey(key)
-      await cloudSaveVideo(key, blob)
-      chunks = []
-    }, 500)
-
-  }
-
-  // get an audio stream
-  const getStream = async () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      console.log("getUserMedia supported.")
-      try {
-        var constraints = {
-          video: false,
-          audio: { latency: 0.05, echoCancellation: false },
-        }
-        stream = await navigator.mediaDevices.getUserMedia(constraints) 
-        mediaRecorder = new MediaRecorder(stream)
-        mediaRecorder.ondataavailable = (e) => {
-          console.log('got chunk')
-          chunks.push(e.data);
-        }
-        ready.value = true
-      } catch (err) {
-        console.error(`The following getUserMedia error occurred: ${err}`)
-        stream = null
-      }
-    } else {
-      console.log("getUserMedia not supported on your browser!");
-    }
-  }
+  const { startRecording, stopRecording, isRecording, isReady, isSaving,  getStream} = useRecording()
 
   await getStream()
 
- 
-
 </script>
+<style>
+.huge {
+  margin-top: 50px;
+  width:200px;
+  height:200px;
+}
+</style>
 <template>
-  <h1>Audiomark</h1>
-  <v-btn color="red" v-if="ready && !isRecording" @click="startRecording()"><v-icon>mdi-record</v-icon></v-btn>
-  <v-btn color="red" v-if="ready && isRecording" @click="stopRecording()"><v-icon>mdi-stop</v-icon></v-btn>
+  <v-card v-if="isReady && !isRecording && !isSaving">
+    <v-card-title>Ready to record</v-card-title>
+    <v-card-text>Press the red record button when you're ready to start recording</v-card-text>
+  </v-card>
+  <v-btn v-if="isReady && !isRecording && !isSaving" class="huge" icon="mdi-record" color="red" @click="startRecording()"></v-btn>
+
+  <v-card  v-if="isReady && isRecording && !isSaving ">
+    <v-card-title>Recording in progress...</v-card-title>
+    <v-card-text>Press the blue stop button when you've finished</v-card-text>
+  </v-card>
+  <v-btn v-if="isReady && isRecording && !isSaving" class="huge" icon="mdi-stop" color="blue" @click="stopRecording()"></v-btn>
+
+  <v-progress-linear v-if="isSaving" indeterminate></v-progress-linear>
+
+  <v-alert v-if="!isReady">Looking for permission to use audio devices</v-alert>
 </template>

@@ -7,14 +7,14 @@ resource "cloudflare_r2_bucket_lifecycle" "example_r2_bucket_lifecycle" {
   account_id = var.cloudflare_account_id
   bucket_name = cloudflare_r2_bucket.audio_bucket.name
   rules = [{
-    id = "Expire all objects older than 24 hours"
+    id = "Expire all objects older than 30 days"
     conditions = {
       prefix = ""
     }
     enabled = true
     delete_objects_transition = {
       condition = {
-        max_age = 30
+        max_age = 2592000
         type = "Age"
       }
     }
