@@ -1,13 +1,13 @@
 <script setup>
   import '~/assets/css/global.css'
-  
+
   // composables
   const { queue } = useShowAlert()
 
 </script>
 <template>   
   <v-app theme="light">
-    <v-app-bar density="compact" class="noprint">
+    <v-app-bar color="#3367D6" density="compact" class="noprint">
       <v-app-bar-title @click="navigateTo('/')">Audiomark</v-app-bar-title>
     </v-app-bar>
     <v-main>
