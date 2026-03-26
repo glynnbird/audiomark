@@ -7,8 +7,14 @@
     window.print()
   }
 </script>
+<style>
+.spacer {
+  margin-bottom: 20px; 
+}
+</style>
 <template>
-  <v-card class="noprint">
+  <Wizard></Wizard>
+  <v-card class="noprint spacer">
     <v-card-title>Print this QR code</v-card-title>
     <v-card-text>
       Print this QR code share your recording with someone. Recordings are kept for 30 days.

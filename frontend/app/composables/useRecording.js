@@ -13,6 +13,25 @@ export default function () {
   let mediaRecorder = null
   let chunks = []
   let stream = null
+  const bcItems = useState('bcItems', () => { return [
+    {
+      title: 'Home',
+      disabled: false,
+      to: '/'
+    },
+    {
+      title: 'Record',
+      disabled: true
+    },
+    {
+      title: 'Upload',
+      disabled: true
+    },
+    {
+      title: 'Share',
+      disabled: true
+    },
+  ]})
 
   function setRecKey(rk) {
     recKey.value = rk
@@ -119,5 +138,22 @@ export default function () {
     }
   }
 
-  return { recKey, setRecKey, clearRecKey, startRecording, stopRecording, getStream, isRecording, isReady,isSaving, qrURL, playbackURL}
+  const breadcrumbItems = computed(() => {
+    bcItems.value[1].disabled = true
+    bcItems.value[2].disabled = true
+    bcItems.value[3].disabled = true
+    if (isRecording.value) {
+      bcItems.value[1].disabled = false
+    }
+    if (isSaving.value) {
+      bcItems.value[1].disabled = true
+      bcItems.value[2].disabled = false
+    }
+    if (recKey.value) {
+      bcItems.value[3].disabled = false
+    }
+    return bcItems.value
+  })
+
+  return { recKey, setRecKey, clearRecKey, startRecording, stopRecording, getStream, isRecording, isReady,isSaving, qrURL, playbackURL, breadcrumbItems}
 }
