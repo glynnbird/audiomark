@@ -58,8 +58,7 @@ export default function () {
     }
     const u = new URL(apiHome)
     u.pathname = `/v/${recKey.value}`
-    const qURL = u.toString()
-    return qURL
+    return u.toString()
   })
 
   const startRecording = async () => {

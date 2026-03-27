@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  modules: ['@vite-pwa/nuxt', 'nuxt-qrcode'],
+  modules: ['@vite-pwa/nuxt', 'nuxt-qrcode', '@vueuse/nuxt'],
   vite: {
     plugins: [
       vuetify({ autoImport: true })
