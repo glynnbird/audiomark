@@ -42,7 +42,7 @@ async function share() {
     type="info"
     variant="tonal"
   ></v-alert>
-  <v-text-field class="noprint spacer" append-inner-icon="mdi-content-copy" @click:append-inner="copyURL">{{ qrURL }}</v-text-field>
+  <v-text-field class="noprint spacer" readonly append-inner-icon="mdi-content-copy" @click:append-inner="copyURL">{{ qrURL }}</v-text-field>
   <v-btn-group class="noprint spacer" variant="text" >
     <v-btn color="primary" @click="print()">Print</v-btn>
     <v-btn color="secondary" @click="share()">Share</v-btn>
