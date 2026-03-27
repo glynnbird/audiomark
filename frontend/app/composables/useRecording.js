@@ -57,7 +57,8 @@ export default function () {
       return ''
     }
     const u = new URL(apiHome)
-    u.pathname = `/v/${recKey.value}`
+    u.pathname = '/v'
+    u.searchParams.set('id', recKey.value)
     return u.toString()
   })
 

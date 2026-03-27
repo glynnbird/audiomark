@@ -1,6 +1,6 @@
 <script setup>
   const route = useRoute()
-  const id = route.params.id
+  const id = route.query.id
   const {playbackURL, setRecKey} = useRecording()
   setRecKey(id)
 </script>
