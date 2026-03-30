@@ -1,15 +1,7 @@
 <script setup>
   // composables
   const { setRecKey, startRecording, stopRecording, isRecording, isReady, isSaving,  getStream} = useRecording()
-  import visualiser from "~/assets/js/visualiser"
-
-  const stream = await getStream()
-  if (stream) {
-    setTimeout(() => {
-      const thevisualiser = new visualiser()
-      thevisualiser.start(document.getElementById("visualiser"), stream)
-    },10)
-  }
+  await getStream()
   setRecKey('')
 
 </script>
@@ -18,12 +10,6 @@
   margin-top: 50px;
   width:200px;
   height:200px;
-}
-.vis {
-  background-color: white;
-  margin-top: 25px;
-  width:100%;
-  height:200px
 }
 </style>
 <template>
@@ -51,16 +37,9 @@
     variant="tonal"
   ></v-alert>
 
-  <v-row>
-    <v-col>
-      <v-btn v-if="isReady && !isRecording && !isSaving" class="huge" icon="mdi-record" color="red" @click="startRecording()"></v-btn>
-      <v-btn v-if="isReady && isRecording && !isSaving" class="huge" icon="mdi-stop" color="blue" @click="stopRecording()"></v-btn>
-    </v-col>
-    <v-col>
-      <!-- level meter -->
-      <canvas v-show="isReady && !isSaving" id="visualiser" class="vis"></canvas>
-    </v-col>
-  </v-row>
+  <!-- giant buttons -->
+  <v-btn v-if="isReady && !isRecording && !isSaving" class="huge" icon="mdi-record" color="red" @click="startRecording()"></v-btn>
+  <v-btn v-if="isReady && isRecording && !isSaving" class="huge" icon="mdi-stop" color="blue" @click="stopRecording()"></v-btn>
 
   <v-progress-linear v-if="isSaving" indeterminate></v-progress-linear>
 
