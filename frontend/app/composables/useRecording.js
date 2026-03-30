@@ -129,6 +129,7 @@ export default function () {
           chunks.push(e.data);
         }
         isReady.value = true
+        return stream
       } catch (err) {
         console.error(`The following getUserMedia error occurred: ${err}`)
         stream = null
@@ -136,6 +137,7 @@ export default function () {
     } else {
       console.log("getUserMedia not supported on your browser!");
     }
+    return null
   }
 
   const breadcrumbItems = computed(() => {
